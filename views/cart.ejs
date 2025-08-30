@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .cartDetail{
+            min-height: 70vh;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include("nav")%>
+   <div class="cartDetail my-3">
+    <% if(c.length == 0){ %>
+        <div class="d-flex justify-content-center align-items-center">
+            <img src="/empty_cart.png" alt="">
+        </div>
+   <% } else{%>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%c.forEach(e=> {%>
+                    <tr>
+                        <td>
+                            <%= e.name %>
+                        </td>
+                        <td><img src="/<%=e.image%>" alt="" width="100px"></td>
+                        <td>
+                            <%= e.finalprice %>
+                        </td>
+                        <td>
+                            <a  href="/decrease/<%= e.id%>"><button class="btn btn-outline-secondary" type="button">-</button></a>       
+                            <%= e.quantity %>
+                            
+                            <a href="/increase/<%= e.id%>"> <button class="btn btn-outline-secondary"
+                                        type="button">+</button></a>
+                        </td>
+                        <td>
+                            <%= e.totalrice%>
+                        </td>
+                        <td> <a href="/deletecart/<%= e.id%>"><button class="btn btn-danger">Delete</button></a></td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+
+        <div class="container d-flex align-items-cemter justify-content-center">
+            <p class="text-center pe-2 pt-2">Total Price:- <b><%= total %></b></p>
+            <a href="/checkout" class="text-decoration-none"><button class="btn btn-warning">Place Order</button></a>
+        </div>
+    <% } %>
+    </div>
+
+        <%- include("footer")%>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js" integrity="sha512-j12pXc2gXZL/JZw5Mhi6LC7lkiXL0e2h+9ZWpqhniz0DkDrO01VNlBrG3LkPBn6DgG2b8CDjzJT+lxfocsS1Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+</html>                          

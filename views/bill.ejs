@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .invoice-container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      color: #000;
+    }
+
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    .store-info h2 {
+      margin: 0 0 5px;
+    }
+
+    .order-info p {
+      margin: 4px 0;
+    }
+
+    .addresses {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .address-box {
+      flex: 1;
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .address-box h3 {
+      margin-top: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #f0f0f0;
+    }
+
+    .summary {
+      text-align: right;
+      margin-top: 30px;
+    }
+
+    .summary p {
+      margin: 5px 0;
+    }
+
+    .summary .total {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .print-button {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .print-button {
+        display: none;
+      }
+
+      .invoice-container {
+        border: none;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-button" onclick="window.print()">🖨️ Print / Save PDF</button>
+
+  <div class="invoice-container">
+    <div class="invoice-header">
+      <div class="store-info">
+        <h2>Your E-Shop</h2>
+        <p>www.yourshop.com</p>
+        <p>Email: support@yourshop.com</p>
+      </div>
+      <div class="order-info">
+        <p><strong>Order ID:</strong> #E123456789</p>
+        <p><strong>Order Date:</strong> May 28, 2025</p>
+        <p><strong>Payment Method:</strong> Credit Card</p>
+      </div>
+    </div>
+
+    <div class="addresses">
+      <div class="address-box">
+        <h3>Billing Address</h3>
+        <p>Jane Doe</p>
+        <p>456 Elm Street</p>
+        <p>Los Angeles, CA 90001</p>
+        <p>jane@example.com</p>
+      </div>
+      <div class="address-box">
+        <h3>Shipping Address</h3>
+        <p><%= pro[0].firstName %> <%= pro[0].lastName %></p>
+        <p> <%= pro[0].address %>, <%= pro[0].state %></p>
+        <p><%= pro[0].country %></p>
+        <p><%= pro[0].email %></p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(e => { %>
+         
+        
+        <tr>
+          <td><%= e.pname %></td>
+          <td><%= e.quantity %></td>
+          <td><%= e.totalPrice %></td>
+          <td><%= e.totalPrice %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="summary">
+      <p>Subtotal:₹ <%= totalPrice %></p>
+      <p>Shipping: ₹10.00</p>
+      <p>Tax (10%): ₹<%= (totalPrice * 0.10).toFixed(2) %></p>
+      <p class="total">Total:  ₹<%= (totalPrice + 10 + (totalPrice * 0.10)).toFixed(2) %></p>
+    </div>
+  </div>
+</body>
+</html>
